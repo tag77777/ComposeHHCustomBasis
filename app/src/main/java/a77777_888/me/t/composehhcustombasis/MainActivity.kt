@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
             val isExpandedScreen = calculateWindowSizeClass(this).widthSizeClass ==
-                    WindowWidthSizeClass.Expanded
+                    WindowWidthSizeClass.Medium
 
             ComposeHHCustomBasisTheme(darkTheme = isDarkTheme) {
                 Box(
@@ -195,7 +195,7 @@ fun Main(
     }
 
     ModalDrawer(
-        drawerBackgroundColor = MaterialTheme.colorScheme.scrim,
+        drawerBackgroundColor = MaterialTheme.colorScheme.surface,
         drawerState = drawerState,
         gesturesEnabled = false,
         drawerContent = {

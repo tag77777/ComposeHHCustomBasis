@@ -48,12 +48,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
-//    implementation(libs.androidx.appcompat)
-//    implementation(libs.google.android.material)
     testImplementation(libs.junit)
-//    androidTestImplementation(libs.androidx.test.ext.junit)
-//    androidTestImplementation(libs.androidx.test.espresso.core)
 }

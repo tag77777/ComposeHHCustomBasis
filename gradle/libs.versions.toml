@@ -163,6 +163,8 @@ androidx-datastore-preferences = {module = "androidx.datastore:datastore-prefere
 coil-compose = {module = "io.coil-kt:coil-compose", version = "2.4.0"}
 lottie_compose = {module = "com.airbnb.android:lottie-compose", version = "6.1.0"}
 
+mockk = {module = "io.mockk:mockk", version = "1.13.8"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }

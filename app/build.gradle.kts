@@ -91,14 +91,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
-//implementation("androidx.compose.material3:material3:1.1.1")
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
-
-//    implementation(libs.androidx.room.runtime)
-//    implementation(libs.androidx.room.ktx)
-//    kapt(libs.androidx.room.compiler)
 
     implementation(libs.timber)
     implementation(libs.code.gson)
@@ -109,6 +104,7 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.runner)

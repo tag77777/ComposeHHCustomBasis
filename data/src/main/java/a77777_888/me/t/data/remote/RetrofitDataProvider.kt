@@ -1,5 +1,6 @@
 package a77777_888.me.t.data.remote
 
+import a77777_888.me.t.data.R
 import a77777_888.me.t.domain.dataentities.IDataProvider
 import a77777_888.me.t.domain.dataentities.areas.Areas
 import a77777_888.me.t.domain.dataentities.employer.EmployerResponseEntity
@@ -10,9 +11,12 @@ import a77777_888.me.t.domain.models.ConnectionException
 import a77777_888.me.t.domain.models.IFlowableSearchSettings
 import a77777_888.me.t.domain.models.ISearchSettings
 import a77777_888.me.t.domain.models.ParseBackendResponseException
+import android.content.Context
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.google.gson.JsonSyntaxException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
@@ -23,8 +27,16 @@ import javax.inject.Singleton
 @Singleton
 class RetrofitDataProvider @Inject constructor(): IDataProvider {
 
+    @Inject
+    @ApplicationContext
+    lateinit var context: Context
+
     override suspend fun getAreas(): List<Areas> =
-            wrapExceptions{ sourceAPI.getAreas() }
+            wrapExceptions{
+                val str = context.getString(R.string.str)
+                Log.e("Tag", "str: $str")
+                sourceAPI.getAreas()
+            }
 
     override fun getVacanciesListPagerFlow(settings: IFlowableSearchSettings)
             : Flow<Pager<Int, VacanciesListItem>>  {
@@ -118,13 +130,14 @@ class RetrofitDataProvider @Inject constructor(): IDataProvider {
         return try {
             block()
         } catch (e: JsonSyntaxException) {
-            throw ParseBackendResponseException(e)
-        } catch (e: JsonSyntaxException) {
-            throw ParseBackendResponseException(e)
+            throw ParseBackendResponseException(text = context.getString(R.string.parsing_error), cause = e)
         } catch (e: HttpException) {
-            throw BackendException(e.code(), e.message())
+            throw BackendException(
+                text = context.getString(R.string.server_error),
+                code = e.code(),
+                message = e.message())
         } catch (e: IOException){
-            throw ConnectionException(e)
+            throw ConnectionException(text = context.getString(R.string.conection_error), cause =  e)
         }
     }
 

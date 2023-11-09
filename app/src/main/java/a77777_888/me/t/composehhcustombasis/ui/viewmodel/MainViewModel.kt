@@ -14,6 +14,7 @@ import a77777_888.me.t.domain.models.ParseBackendResponseException
 import a77777_888.me.t.domain.usecases.AreasUseCase
 import a77777_888.me.t.domain.usecases.EmployerUseCase
 import a77777_888.me.t.domain.usecases.FavoritesInterActor
+import a77777_888.me.t.domain.usecases.VacanciesUseCase
 import a77777_888.me.t.domain.usecases.VacancyUseCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,14 +36,14 @@ import kotlin.reflect.KProperty
 class MainViewModel @Inject constructor(
     val searchSettings: IFlowableSearchSettings,
     private val dataProvider: IDataProvider,
-    private val iFavorites: IFavorites
+    iFavorites: IFavorites
 ) : ViewModel() {
 
     val uiState = UiState()
 
 // VacanciesList
     var vacanciesListPagerFlow: Flow<Pager<Int, VacanciesListItem>> =
-        dataProvider.getVacanciesListPagerFlow(searchSettings)
+        VacanciesUseCase.getVacanciesPagerFlow(dataProvider, searchSettings)
 
 // Areas
     private val _areasStateFlow = MutableStateFlow(DataLoadState<List<Areas>>())
@@ -98,33 +99,23 @@ class MainViewModel @Inject constructor(
         try {
             stateFlow.update { state.copy(content = block.invoke()) }
         } catch (e: ParseBackendResponseException) {
-            stateFlow.update { state.copy(error = Error("Ошибка парсинга", error = e)) }
+            stateFlow.update { state.copy(error = e.text) }
         } catch (e: ConnectionException) {
-            stateFlow.update { state.copy(error = Error("Ошибка соединения", error = e)) }
+            stateFlow.update { state.copy(error = e.text) }
         } catch (e: BackendException) {
             stateFlow.update {
-                state.copy(
-                    error = Error(
-                        "Ошибка сервера:\\nКод ${e.code}\\n${e.message}",
-                        error = e
-                    )
-                )
+                state.copy(error = "${e.text}:\\nКод ${e.code}\\n${e.message}")
             }
         } catch (e: Exception) {
-            stateFlow.update { state.copy(error = Error("Внутренняя ошибка", error = e)) }
+            stateFlow.update { state.copy(error = "") }
         }
     }
 
 }
 
-class Error(
-    val message: String = "Error: ",
-    val error: Throwable? = null,
-)
-
 data class DataLoadState<T>(
     val content: T? = null,
-    val error: Error? = null
+    val error: String? = null
 )
 
 class UiState {

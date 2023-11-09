@@ -46,4 +46,5 @@
     <string name="go_out">Выйти</string>
     <string name="try_again">Попробовать снова</string>
     <string name="placed">Размещено: %1$s</string>
+    <string name="days">дней</string>
 </resources>

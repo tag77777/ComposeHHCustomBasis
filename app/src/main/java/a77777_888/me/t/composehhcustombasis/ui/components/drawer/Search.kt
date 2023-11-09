@@ -310,7 +310,7 @@ fun Search(
                 onDismissRequest = {
                 // expanded = false;
                 },
-                modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
+                modifier = Modifier.background(color = MaterialTheme.colorScheme.scrim)
             ) {
                 relevantRegions.value.forEach {
                     DropdownMenuItem(
@@ -328,6 +328,7 @@ fun Search(
                                 color = MaterialTheme.colorScheme.surface,
                                 shape = MaterialTheme.shapes.medium
                             )
+                                .padding(horizontal = 8.dp)
                         )
 //                        FilterChip(selected = false, onClick = {}, label = { Text(text = it.name) })
 
@@ -505,6 +506,7 @@ fun Search(
             label = { Text(stringResource(id = R.string.period)) },
             singleLine = true,
             shape = RoundedCornerShape(8.dp),
+            supportingText = { Text(stringResource(id = R.string.days)) },
             trailingIcon = {
                 IconButton(onClick = {period  = "" }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = null)

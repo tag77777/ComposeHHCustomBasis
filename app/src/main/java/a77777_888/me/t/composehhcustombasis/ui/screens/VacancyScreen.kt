@@ -251,7 +251,7 @@ fun VacancyScreen(
             ErrorMessage(
                 tryAgain = { loadVacancy(vacancyId, scope) },
                 cansel = cancel,
-                message = vacancyState.error!!.message
+                message = vacancyState.error!!.ifBlank { stringResource(id = R.string.error_oops) }
             )
         else -> LoadingMessage()
     }

@@ -175,33 +175,34 @@ fun FavoritesListScreen(
     val scope = rememberCoroutineScope()
     val favoritesList = favoritesListFlow.collectAsState(initial = emptyList()).value
 
-    if (favoritesList.isEmpty())
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+    LazyColumn(
+        state = rememberLazyListState()
+    ) {
+        stickyHeader {
             Text(
-                text = stringResource(id = R.string.empty_list),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 20.dpToSp,
-                fontStyle = FontStyle.Italic,
+                text = stringResource(id = R.string.favorites),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 24.dp),
+                style = header(),
+                textAlign = TextAlign.Center
             )
         }
-    else
-        LazyColumn(
-            state = rememberLazyListState()
-        ) {
-            stickyHeader {
+        if (favoritesList.isEmpty())
+            item {
                 Text(
+                    text = stringResource(id = R.string.empty_list),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = stringResource(id = R.string.favorites),
+                    fontSize = 20.dpToSp,
+                    fontStyle = FontStyle.Italic,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 24.dp),
-                    style = header(),
+                        .padding(top = 256.dp),
                     textAlign = TextAlign.Center
                 )
             }
+        else
             items(
                 count = favoritesList.size,
                 key = { index -> favoritesList[index].id }
@@ -216,7 +217,7 @@ fun FavoritesListScreen(
                         ?: VacanciesListItem(favoritesList[index])
                 )
             }
-        }
+    }
 }
 
 

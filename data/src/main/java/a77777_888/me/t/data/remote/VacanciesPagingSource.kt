@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 
 typealias VacancyPageLoader = suspend (pageIndex: Int, pageSize: Int) -> List<VacanciesListItem>
 
-class VacanciesPagingSource(
+internal class VacanciesPagingSource(
     private val loader: VacancyPageLoader,
     private val pageSize: Int
 ) : PagingSource<Int, VacanciesListItem>() {

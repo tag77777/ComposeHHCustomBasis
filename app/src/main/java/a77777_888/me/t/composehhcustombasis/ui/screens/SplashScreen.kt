@@ -5,7 +5,6 @@ import a77777_888.me.t.composehhcustombasis.ui.components.ErrorMessage
 import a77777_888.me.t.composehhcustombasis.ui.components.LoadingMessage
 import a77777_888.me.t.composehhcustombasis.ui.utils.dpToSp
 import a77777_888.me.t.composehhcustombasis.ui.viewmodel.DataLoadState
-import a77777_888.me.t.composehhcustombasis.ui.viewmodel.Error
 import a77777_888.me.t.data.repositories.AreasRepository
 import a77777_888.me.t.domain.dataentities.areas.Areas
 import androidx.compose.animation.core.Animatable
@@ -133,7 +132,7 @@ fun SplashScreen(
                     ErrorMessage(
                         tryAgain = { getAreas() },
                         cansel = { cancel() },
-                        message = areasState.error!!.message
+                        message = areasState.error!!.ifBlank { stringResource(id = R.string.error_oops) }
                     )
                 }
 
@@ -152,7 +151,7 @@ fun SplashScreen(
 fun PreviewSplash() {
     SplashScreen(
         {}, {}, {},
-        flowOf(DataLoadState(error = Error(stringResource(id = R.string.error_oops))))
+        flowOf(DataLoadState(error = stringResource(id = R.string.error_oops)))
     )
 }
 

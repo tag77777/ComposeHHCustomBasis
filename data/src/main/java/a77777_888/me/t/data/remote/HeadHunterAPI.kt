@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 // https://api.hh.ru/openapi/redoc#tag/Soiskatelskie-statusy
 // устарело - https://github.com/hhru/api/blob/master/docs/vacancies.md#search
-interface HeadHunterAPI {
+internal interface HeadHunterAPI {
 
     @Headers("User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:96.0)")
     // Здесь и далее  необходимо указать название приложения, но поскольку этот проект едва ли

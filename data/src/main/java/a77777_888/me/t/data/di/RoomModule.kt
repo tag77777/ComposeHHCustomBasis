@@ -12,7 +12,7 @@ import androidx.room.Room
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RoomModule {
+internal class RoomModule {
 
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): FavoritesDatabase =

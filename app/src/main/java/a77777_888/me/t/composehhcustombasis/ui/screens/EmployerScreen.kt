@@ -85,7 +85,9 @@ fun EmployerScreen(
                     shape = MaterialTheme.shapes.small,
                     shadowElevation = 16.dp
                 ) {
-                    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+                    Column(modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())) {
                         Text(
                             text = stringResource(id = R.string.employer),
                             modifier = Modifier
@@ -192,7 +194,7 @@ fun EmployerScreen(
             ErrorMessage(
                 tryAgain = { loadEmployer(id, scope) },
                 cansel = cancel,
-                message = employerState.error!!.message
+                message = employerState.error!!.ifBlank { stringResource(id = R.string.error_oops) }
             )
         else -> LoadingMessage()
     }
